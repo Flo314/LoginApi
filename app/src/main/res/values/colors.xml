@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="colorAccent">#3083FF</color>
+
+    <color name="colorDeepSkyBlue">#00A8FF</color>
+    <color name="colorSolitude">#DFE6E9</color>
+    <color name="colorWhiteSmoke">#F5F5F5</color>
+    <color name="colorBlackPearl">#1E272E</color>
+    <color name="colorRhino">#3B4350</color>
+    <color name="colorFreeSpeechBlue">#3C40C6</color>
+</resources>
