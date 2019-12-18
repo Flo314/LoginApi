@@ -2,6 +2,7 @@ package com.example.loginapi.ui.auth
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.example.loginapi.data.repositories.UserRepository
 
 class AuthViewModel : ViewModel() {
 
@@ -18,8 +19,14 @@ class AuthViewModel : ViewModel() {
             authListenerVM?.onFailure("Invalid email or password")
             return
         }
-        // success
-        authListenerVM?.onSuccess()
+
+        // c'est un livedata qu'on peut observer dans loginActivity
+        /* problème car on crée une instance de UserRepository à l'intérieur de AuthViewModel
+        et cela rend la classe UserRepository dépendante de AuthViewModel c'est une mauvaise pratique
+        il vaut mieux l'injecter mais pour l'instant je fais comme çà*/
+        val loginResponse = UserRepository().userLogin(email!!, password!!)
+        // success on passe le livedata
+        authListenerVM?.onSuccess(loginResponse)
 
     }
 }

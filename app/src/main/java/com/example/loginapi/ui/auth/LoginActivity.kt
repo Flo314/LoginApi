@@ -3,10 +3,16 @@ package com.example.loginapi.ui.auth
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.loginapi.R
 import com.example.loginapi.databinding.ActivityLoginBinding
+import com.example.loginapi.util.hide
+import com.example.loginapi.util.show
 import com.example.loginapi.util.toast
+import kotlinx.android.synthetic.main.activity_login.*
+import timber.log.Timber
 
 class LoginActivity : AppCompatActivity(), AuthListener {
 
@@ -29,18 +35,23 @@ class LoginActivity : AppCompatActivity(), AuthListener {
     /**
      ***********************************************************************************************
      * Méthodes Interface AuthListener
-     * **********************************************************************************************
+     ***********************************************************************************************
      */
 
     override fun onStarted() {
-        toast("Login started")
+        progress_bar.show()
     }
 
-    override fun onSuccess() {
-        toast("Login success")
+    override fun onSuccess(loginResponse: LiveData<String>) {
+        // observer le loginResponse - l'observateur (Observer) renverra la valeur 'it'
+        loginResponse.observe(this, Observer {
+            progress_bar.hide()
+            toast(it)
+        })
     }
 
     override fun onFailure(message: String) {
+        progress_bar.hide()
         toast(message)
     }
 }
