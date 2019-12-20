@@ -1,7 +1,9 @@
 package com.example.loginapi.data.network
 
-import okhttp3.ResponseBody
-import retrofit2.Call
+import android.content.SharedPreferences
+import com.example.loginapi.data.network.responses.AuthResponse
+import okhttp3.OkHttpClient
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Field
@@ -20,16 +22,29 @@ interface MyApi {
 
     @FormUrlEncoded
     @POST("login")
-    fun userLogin(
+    // suspend est au centre des coroutines et veut dire que c'est une fonction qui peut être suspendue et reprise
+    // asynchrone
+    suspend fun userLogin(
         @Field("email")email: String,
         @Field("password")password: String
-    ): Call<ResponseBody>
+    ): Response<AuthResponse>
+
+   /* @GET("id")
+    suspend fun getUser(
+        @Field("id")id: Int?
+    ): Response<>*/
 
     // singleton
     companion object {
+
+        /*val okHttpClient: OkHttpClient = OkHttpClient.Builder()
+            .addInterceptor(ConnectivityInterceptor())
+            .build()*/
+
         // permet de faire des appel -> MyApi() équivaut à MyApi.invoke()
         operator fun invoke() : MyApi {
             return Retrofit.Builder()
+                //.client(okHttpClient)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

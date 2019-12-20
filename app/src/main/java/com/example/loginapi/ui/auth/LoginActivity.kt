@@ -1,12 +1,13 @@
 package com.example.loginapi.ui.auth
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.loginapi.R
+import com.example.loginapi.data.db.entities.User
 import com.example.loginapi.databinding.ActivityLoginBinding
 import com.example.loginapi.util.hide
 import com.example.loginapi.util.show
@@ -42,16 +43,22 @@ class LoginActivity : AppCompatActivity(), AuthListener {
         progress_bar.show()
     }
 
-    override fun onSuccess(loginResponse: LiveData<String>) {
-        // observer le loginResponse - l'observateur (Observer) renverra la valeur 'it'
-        loginResponse.observe(this, Observer {
-            progress_bar.hide()
-            toast(it)
-        })
+    override fun onSuccess(user: User?) {
+        progress_bar.hide()
+        toast("${user?.firstname} - isConnected!")
     }
 
     override fun onFailure(message: String) {
         progress_bar.hide()
         toast(message)
     }
+
+    // enregistrer le token
+    fun registerJwt(data: String?){
+        val sharedPreferences = getSharedPreferences("autorization", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("access_token", data)
+        editor.apply()
+    }
+
 }

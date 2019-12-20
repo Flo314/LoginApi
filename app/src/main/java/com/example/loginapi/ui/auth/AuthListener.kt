@@ -1,6 +1,7 @@
 package com.example.loginapi.ui.auth
 
-import androidx.lifecycle.LiveData
+import com.example.loginapi.data.db.entities.User
+
 
 /**
  * Afficher les messages d'erreur et de success au clic du bouton (méthode : onLoginButtonClick())
@@ -10,7 +11,7 @@ interface AuthListener {
     // utiliser quand on commence un appel à l'api pour la connection et afficher la progressbar
     fun onStarted()
     // authentification réussit
-    fun onSuccess(loginResponse: LiveData<String>)
+    fun onSuccess(data: User?)
     // authentification échouée
     fun onFailure(message: String)
 }

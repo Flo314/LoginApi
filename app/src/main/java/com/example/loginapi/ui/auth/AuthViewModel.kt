@@ -3,6 +3,7 @@ package com.example.loginapi.ui.auth
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.example.loginapi.data.repositories.UserRepository
+import com.example.loginapi.util.Coroutines
 
 class AuthViewModel : ViewModel() {
 
@@ -20,13 +21,17 @@ class AuthViewModel : ViewModel() {
             return
         }
 
-        // c'est un livedata qu'on peut observer dans loginActivity
-        /* problème car on crée une instance de UserRepository à l'intérieur de AuthViewModel
-        et cela rend la classe UserRepository dépendante de AuthViewModel c'est une mauvaise pratique
-        il vaut mieux l'injecter mais pour l'instant je fais comme çà*/
-        val loginResponse = UserRepository().userLogin(email!!, password!!)
-        // success on passe le livedata
-        authListenerVM?.onSuccess(loginResponse)
+        // on ne peux pas mettre toute les fonctions en suspend donc on utilise un CoroutinesScope
+        Coroutines.main {
+            val response = UserRepository().userLogin(email!!, password!!)
+            // si j'ai une réponse cela veut dire que le user est connecté
+            if (response.isSuccessful) {
+                authListenerVM?.onSuccess(response.body()?.user!!)
+            } else {
+                authListenerVM?.onFailure("Error Code: ${response.code()}")
+            }
+        }
+
 
     }
 }
