@@ -11,7 +11,7 @@ interface AuthListener {
     // utiliser quand on commence un appel à l'api pour la connection et afficher la progressbar
     fun onStarted()
     // authentification réussit
-    fun onSuccess(data: User?)
+    fun onSuccess(user: User?)
     // authentification échouée
     fun onFailure(message: String)
 }

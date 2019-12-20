@@ -9,9 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.loginapi.R
 import com.example.loginapi.data.db.entities.User
 import com.example.loginapi.databinding.ActivityLoginBinding
-import com.example.loginapi.util.hide
-import com.example.loginapi.util.show
-import com.example.loginapi.util.toast
+import com.example.loginapi.util.*
 import kotlinx.android.synthetic.main.activity_login.*
 import timber.log.Timber
 
@@ -45,12 +43,14 @@ class LoginActivity : AppCompatActivity(), AuthListener {
 
     override fun onSuccess(user: User?) {
         progress_bar.hide()
-        toast("${user?.firstname} - isConnected!")
+        //toast("${user?.firstname} - isConnected!")
+        root_layout.snackbar("${user?.firstname} ${user?.lastname} - isConnected!")
     }
 
     override fun onFailure(message: String) {
         progress_bar.hide()
-        toast(message)
+        //toast(message)
+        root_layout.snackbar(message)
     }
 
     // enregistrer le token

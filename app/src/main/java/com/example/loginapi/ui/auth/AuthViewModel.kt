@@ -3,6 +3,7 @@ package com.example.loginapi.ui.auth
 import android.view.View
 import androidx.lifecycle.ViewModel
 import com.example.loginapi.data.repositories.UserRepository
+import com.example.loginapi.util.ApiException
 import com.example.loginapi.util.Coroutines
 
 class AuthViewModel : ViewModel() {
@@ -23,15 +24,18 @@ class AuthViewModel : ViewModel() {
 
         // on ne peux pas mettre toute les fonctions en suspend donc on utilise un CoroutinesScope
         Coroutines.main {
-            val response = UserRepository().userLogin(email!!, password!!)
-            // si j'ai une réponse cela veut dire que le user est connecté
-            if (response.isSuccessful) {
-                authListenerVM?.onSuccess(response.body()?.user!!)
-            } else {
-                authListenerVM?.onFailure("Error Code: ${response.code()}")
+            try {
+                val authResponse = UserRepository().userLogin(email!!, password!!)
+                authResponse.user?.let {
+                    authListenerVM?.onSuccess(it)
+                    // return pour ne pas exécuter le onfailure()
+                    return@main
+                }
+                // dans le cas ou le user est null
+                authListenerVM?.onFailure(authResponse.message!!)
+            }catch (e: ApiException) {
+                authListenerVM?.onFailure(e.message!!)
             }
         }
-
-
     }
 }

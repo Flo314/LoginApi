@@ -8,7 +8,8 @@ import com.example.loginapi.data.db.entities.User
  */
 data class AuthResponse(
    val success: Boolean?,
-   val data: String?,
+   // dans l'Api message = data
+   val message: String?,
    val id: Int?,
    val user: User?,
    val token: String?
