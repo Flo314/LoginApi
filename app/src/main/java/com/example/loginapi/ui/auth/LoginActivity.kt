@@ -7,28 +7,24 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.loginapi.R
-import com.example.loginapi.data.db.AppDatabase
 import com.example.loginapi.data.db.entities.User
-import com.example.loginapi.data.network.MyApi
-import com.example.loginapi.data.network.NetworkConnectionInterceptor
-import com.example.loginapi.data.repositories.UserRepository
 import com.example.loginapi.databinding.ActivityLoginBinding
 import com.example.loginapi.ui.home.HomeActivity
 import com.example.loginapi.util.hide
 import com.example.loginapi.util.show
 import com.example.loginapi.util.snackbar
 import kotlinx.android.synthetic.main.activity_login.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.kodein
+import org.kodein.di.generic.instance
 
-class LoginActivity : AppCompatActivity(), AuthListener {
+class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
+
+    override val kodein by kodein()
+    private val factory : AuthViewModelFactory by instance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
-        val api = MyApi(networkConnectionInterceptor)
-        val db = AppDatabase(this)
-        val userRepository = UserRepository(api,db)
-        val factory = AuthViewModelFactory(userRepository)
 
         // lier le layout à l'activity avec le dataBinding
         val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
