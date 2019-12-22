@@ -2,9 +2,11 @@ package com.example.loginapi.ui.auth
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.example.loginapi.data.network.NetworkConnectionInterceptor
 import com.example.loginapi.data.repositories.UserRepository
 import com.example.loginapi.util.ApiException
 import com.example.loginapi.util.Coroutines
+import com.example.loginapi.util.NoInternetException
 
 class AuthViewModel(
     private val userRepository: UserRepository
@@ -41,6 +43,8 @@ class AuthViewModel(
                 // dans le cas ou le user est null
                 authListenerVM?.onFailure(authResponse.message!!)
             }catch (e: ApiException) {
+                authListenerVM?.onFailure(e.message!!)
+            }catch (e: NoInternetException) {
                 authListenerVM?.onFailure(e.message!!)
             }
         }

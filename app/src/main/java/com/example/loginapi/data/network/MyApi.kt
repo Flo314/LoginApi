@@ -36,15 +36,18 @@ interface MyApi {
 
     // singleton
     companion object {
+        operator fun invoke(
+            networkConnectionInterceptor: NetworkConnectionInterceptor
+        ) : MyApi {
 
-        /*val okHttpClient: OkHttpClient = OkHttpClient.Builder()
-            .addInterceptor(ConnectivityInterceptor())
-            .build()*/
+        val okHttpClient: OkHttpClient = OkHttpClient.Builder()
+            .addInterceptor(networkConnectionInterceptor)
+            .build()
 
         // permet de faire des appel -> MyApi() équivaut à MyApi.invoke()
-        operator fun invoke() : MyApi {
+
             return Retrofit.Builder()
-                //.client(okHttpClient)
+                .client(okHttpClient)
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

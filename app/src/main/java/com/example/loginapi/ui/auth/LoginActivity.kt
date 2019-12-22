@@ -10,6 +10,7 @@ import com.example.loginapi.R
 import com.example.loginapi.data.db.AppDatabase
 import com.example.loginapi.data.db.entities.User
 import com.example.loginapi.data.network.MyApi
+import com.example.loginapi.data.network.NetworkConnectionInterceptor
 import com.example.loginapi.data.repositories.UserRepository
 import com.example.loginapi.databinding.ActivityLoginBinding
 import com.example.loginapi.ui.home.HomeActivity
@@ -23,7 +24,8 @@ class LoginActivity : AppCompatActivity(), AuthListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val api = MyApi()
+        val networkConnectionInterceptor = NetworkConnectionInterceptor(this)
+        val api = MyApi(networkConnectionInterceptor)
         val db = AppDatabase(this)
         val userRepository = UserRepository(api,db)
         val factory = AuthViewModelFactory(userRepository)
