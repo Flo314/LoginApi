@@ -14,7 +14,7 @@ interface UserDao {
     // insérer ou mettre à jour un user dans la db
     // return l'id d'insertion -> Long
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upsert(user: User): Long
+    suspend fun upsert(user: User): Long
 
     @Query("SELECT * FROM user WHERE uid = $CURRENT_USER_ID")
     fun getUser(): LiveData<User>
