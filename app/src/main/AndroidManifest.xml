@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.home.HomeActivity"></activity>
-        <activity android:name=".ui.auth.SignupActivity" />
+        <activity android:name=".ui.auth.SignupActivity"
+            android:theme="@style/AppThemeNoACtionBar"/>
         <activity
             android:name=".ui.auth.LoginActivity"
             android:theme="@style/AppThemeNoACtionBar">

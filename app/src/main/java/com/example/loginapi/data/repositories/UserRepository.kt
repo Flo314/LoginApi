@@ -13,9 +13,16 @@ class UserRepository(
     private val db: AppDatabase
 ) : SafeApiRequest(){
 
+    // s'authentifier
     suspend fun userLogin(email: String, password:String): AuthResponse {
 
        return apiRequest { api.userLogin(email, password) }
+    }
+
+    // s'inscrire
+    suspend fun userSignup(firstname: String, lastname: String, email: String, password: String): AuthResponse {
+
+        return apiRequest { api.userSignup(firstname, lastname, email, password) }
     }
 
     // enregistrer le user dans la db locale

@@ -12,8 +12,8 @@ data class User(
     var id: Int? = null,
     var firstname: String? = null,
     var lastname: String? = null,
-    var email: String? = null,
-    var number: Int? = null
+    var email: String? = null
+
 
 ){
     @PrimaryKey(autoGenerate = false)

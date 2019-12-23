@@ -12,7 +12,7 @@ import retrofit2.http.POST
 
 //const val BASE_URL = "http://localhost:3000/api/users/"
 // pour l'émulateur
-const val BASE_URL = "http://10.0.2.2:3000/api/users/"
+const val BASE_URL = "http://10.0.2.2:3000/api/v1/users/"
 
 /**
  * Interface qui couvre les différentes urls a appeler pour recevoir les données
@@ -28,6 +28,15 @@ interface MyApi {
         @Field("email")email: String,
         @Field("password")password: String
     ): Response<AuthResponse>
+
+    @FormUrlEncoded
+    @POST("signup")
+    suspend fun userSignup(
+        @Field("firstname")firstname: String,
+        @Field("lastname")lastname: String,
+        @Field("email")email: String,
+        @Field("password")password: String
+    ) : Response<AuthResponse>
 
    /* @GET("id")
     suspend fun getUser(
