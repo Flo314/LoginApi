@@ -10,4 +10,9 @@
         android:name="com.example.loginapi.ui.home.profile.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/profile_fragment" />
+    <fragment
+        android:id="@+id/commentsFragment"
+        android:name="com.example.loginapi.ui.home.comments.CommentsFragment"
+        android:label="Comments"
+        tools:layout="@layout/comments_fragment" />
 </navigation>

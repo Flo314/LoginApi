@@ -4,8 +4,10 @@ import android.app.Application
 import com.example.loginapi.data.db.AppDatabase
 import com.example.loginapi.data.network.MyApi
 import com.example.loginapi.data.network.NetworkConnectionInterceptor
+import com.example.loginapi.data.repositories.CommentsRepository
 import com.example.loginapi.data.repositories.UserRepository
 import com.example.loginapi.ui.auth.AuthViewModelFactory
+import com.example.loginapi.ui.home.comments.CommentsViewModelFactory
 import com.example.loginapi.ui.home.profile.ProfileViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -30,7 +32,10 @@ class MVVMApplication : Application(), KodeinAware {
         bind() from singleton { MyApi(instance()) }
         bind() from singleton { AppDatabase(instance()) }
         bind() from singleton { UserRepository(instance(), instance()) }
+        bind() from singleton { CommentsRepository(instance(), instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
         bind() from provider { ProfileViewModelFactory(instance()) }
+        bind() from provider { CommentsViewModelFactory(instance()) }
+
     }
 }

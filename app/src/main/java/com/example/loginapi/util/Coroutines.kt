@@ -13,4 +13,11 @@ object Coroutines {
             // launch renvoi un job
             work()
         }
+
+    fun io(work: suspend (() -> Unit)) =
+        // définir le thread qu'il devra utiliser (Main)
+        CoroutineScope(Dispatchers.IO).launch {
+            // launch renvoi un job
+            work()
+        }
 }

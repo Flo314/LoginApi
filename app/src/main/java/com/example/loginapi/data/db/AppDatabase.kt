@@ -4,13 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.loginapi.data.db.entities.Comment
 import com.example.loginapi.data.db.entities.User
 
 /**
  * Base de données
  */
 @Database(
-    entities = [User::class],
+    entities = [User::class, Comment::class],
     version = 1,
     exportSchema = false
 )
@@ -19,6 +20,8 @@ abstract class AppDatabase : RoomDatabase() {
     // On utilise cette db pour obtenir le UserDao puis à partir de ce UserDao on peut enregistrer
     // le user dans la db
     abstract fun getUserDao(): UserDao
+
+    abstract fun getCommentDao(): CommentDao
 
     companion object {
         // disponible partout
